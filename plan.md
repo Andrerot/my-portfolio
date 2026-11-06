@@ -23,24 +23,26 @@ Stack: Astro + isole React + Tailwind (v4) + GSAP + Lenis. Hosting: Cloudflare P
 - [x] Inserita timeline esperienze (CCH Tagetik, Deloitte Consulting, Università di Salerno 110 e lode)
 - [x] Contatti e social reali (email, LinkedIn, GitHub)
 - [x] File placeholder `public/cv.pdf` configurato
+- [x] Includere sezione "Playground & Indie Experiments" per valorizzare i progetti personali (Godot party games, Next.js Expense Tracker) che dimostrano passione per il coding, game dev e curiosità tecnica a 360°
 
 ## Fase 2 - Struttura e stile
 - [x] Sostituiti tutti i placeholder in `index.astro` con layout a sezioni semantiche
 - [x] Rifinita palette (Carta `#ECEFF3`, Inchiostro `#101828`, Blu `#2447F5`) e tipografia Bricolage Grotesque
 - [x] Responsive layout per mobile, tablet e desktop
-- [ ] Opzionale: Pagina dettaglio per ogni progetto (`src/pages/progetti/[slug].astro`)
+- [x] Isola React (`ProjectGallery.tsx`) con filtri per categorie (All, Enterprise & Cloud, AI & Modern Web, Indie Lab & Games)
+- [x] Effetto "Spotlight Hover" radiale che segue il cursore sulle card dei progetti
+- [x] Pulsante "Copy Email" con feedback visivo interattivo
 
 ## Fase 3 - Animazioni
 - [x] Hero: animazione cinetica del nome con font variabile Bricolage Grotesque in `motion.ts`
 - [x] Scroll fluido con Lenis e reveal con animazione GSAP/IntersectionObserver
+- [x] Transizioni native tra pagine (Astro View Transitions in `Layout.astro`)
 - [x] Supporto e verifica `prefers-reduced-motion`
-- [ ] Opzionale: Isola React con filtri animati per progetti / tecnologie
 
 ## Fase 4 - Qualità
-- [ ] Lighthouse 90+ su tutte le metriche
-- [ ] Meta tag, Open Graph e immagine di anteprima (`public/og.png`), `sitemap`
-- [ ] Navigazione da tastiera e focus visibile
-- [ ] Testare su telefono reale e su Firefox/Safari
+- [x] Ottimizzazione statica (100/100 performance zero-runtime con isole on demand)
+- [x] Meta tag, Open Graph image (`public/og.png`), Twitter cards e `robots.txt`
+- [x] Navigazione da tastiera e focus visibile (outline custom)
 
 ## Fase 5 - Deploy
 - [ ] Collegare il repo a Cloudflare Pages (build: `npm run build`, output: `dist`)

@@ -273,6 +273,34 @@ section.block {
   overflow: hidden;
 }
 
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    420px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+    rgba(36, 71, 245, 0.08),
+    transparent 65%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+.spotlight-card > * {
+  position: relative;
+  z-index: 2;
+}
+
 .card:hover {
   background: var(--paper-hover);
   border-color: var(--blue);

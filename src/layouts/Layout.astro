@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title?: string;
@@ -10,6 +11,8 @@ const {
   title = "Andrea Montillo — Software Engineer",
   description = "Software Engineer with a Master's degree (110 cum laude) specializing in Cloud, Distributed Systems, Microservices, and Agentic AI workflows.",
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://andreamontillo.pages.dev");
 ---
 <!doctype html>
 <html lang="en">
@@ -19,12 +22,21 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content="Andrea Montillo" />
+    <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph / Meta -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:site_name" content="Andrea Montillo Portfolio" />
+    <meta property="og:image" content="/og.png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="/og.png" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -36,6 +48,9 @@ const {
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Public+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Astro View Transitions -->
+    <ViewTransitions />
   </head>
   <body>
     <slot />
