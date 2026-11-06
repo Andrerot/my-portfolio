@@ -47,7 +47,7 @@ Stack: Astro + isole React + Tailwind (v4) + GSAP + Lenis. Hosting: Cloudflare P
 
 ## Fase 5 - Deploy (GitHub Pages)
 - [x] Configurato workflow automatico GitHub Actions `.github/workflows/deploy.yml`
-- [x] Configurato `astro.config.mjs` con `site` e `base` per GitHub Pages (`https://andrerot.github.io/my-portfolio`)
-- [ ] Push sul branch `main` del repository GitHub (`https://github.com/Andrerot/my-portfolio.git`)
+- [x] Configurato `astro.config.mjs` con `site` e `base` per GitHub Pages
+- [x] Push eseguito con successo sul branch `main` del repository GitHub
 - [ ] Abilitare GitHub Pages nelle impostazioni della repo su GitHub (Source: "GitHub Actions")
 - [ ] Inserire il link definitivo nel CV e su LinkedIn
