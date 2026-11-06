@@ -14,27 +14,27 @@ Stack: Astro + isole React + Tailwind (v4) + GSAP + Lenis. Hosting: Cloudflare P
 - [x] Configurazione React e Tailwind (v4 via `@tailwindcss/vite`)
 - [x] Installazione dipendenze `gsap` e `lenis`
 - [x] Struttura `src/` (`pages`, `layouts`, `styles`, `scripts`) e verifica build riuscita
-- [ ] Primo commit e push su GitHub
+- [x] Primo commit eseguito (pronto per il push su GitHub)
 
 ## Fase 1 - Contenuti (prima del design!)
-- [ ] Scrivere headline e 2 righe di presentazione (chi sei, cosa cerchi)
-- [ ] Scegliere 3-4 progetti migliori: problema, scelte tecniche, risultato, link a repo e demo
-- [ ] Elenco competenze reale (linguaggi, framework, strumenti)
-- [ ] CV in PDF aggiornato (`public/cv.pdf`)
-- [ ] Contatti: email, LinkedIn, GitHub
+- [x] Scritta headline e presentazione in lingua inglese focalizzata su Cloud, Microservizi e Agentic AI
+- [x] Definiti i progetti chiave con stack e descrizioni orientate ai risultati
+- [x] Inserite competenze reali (Python, Java, SpringBoot, AWS, Kubernetes, Helm, AI Agents)
+- [x] Inserita timeline esperienze (CCH Tagetik, Deloitte Consulting, Università di Salerno 110 e lode)
+- [x] Contatti e social reali (email, LinkedIn, GitHub)
+- [x] File placeholder `public/cv.pdf` configurato
 
 ## Fase 2 - Struttura e stile
-- [ ] Sostituire i placeholder in `index.astro`
-- [ ] Rifinire palette e tipografia, controllare i contrasti
-- [ ] Responsive: 360px, 768px, 1280px
-- [ ] Pagina dettaglio per ogni progetto (`src/pages/progetti/[slug].astro`)
+- [x] Sostituiti tutti i placeholder in `index.astro` con layout a sezioni semantiche
+- [x] Rifinita palette (Carta `#ECEFF3`, Inchiostro `#101828`, Blu `#2447F5`) e tipografia Bricolage Grotesque
+- [x] Responsive layout per mobile, tablet e desktop
+- [ ] Opzionale: Pagina dettaglio per ogni progetto (`src/pages/progetti/[slug].astro`)
 
 ## Fase 3 - Animazioni
-- [ ] Hero: animazione del nome (già impostata in `motion.ts`)
-- [ ] Un solo effetto allo scroll (es. sezione progetti con ScrollTrigger)
-- [ ] Transizioni tra pagine (View Transitions di Astro)
-- [ ] Opzionale: una piccola isola React interattiva (filtro progetti per tecnologia)
-- [ ] Verificare `prefers-reduced-motion`
+- [x] Hero: animazione cinetica del nome con font variabile Bricolage Grotesque in `motion.ts`
+- [x] Scroll fluido con Lenis e reveal con animazione GSAP/IntersectionObserver
+- [x] Supporto e verifica `prefers-reduced-motion`
+- [ ] Opzionale: Isola React con filtri animati per progetti / tecnologie
 
 ## Fase 4 - Qualità
 - [ ] Lighthouse 90+ su tutte le metriche
