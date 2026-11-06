@@ -113,15 +113,25 @@ a {
 
 .site-header nav {
   display: flex;
-  gap: 1.75rem;
+  gap: 1rem;
   align-items: center;
 }
 
 .nav-link {
+  display: none;
   font-size: 0.95rem;
   font-weight: 500;
   color: var(--starlight-muted);
   transition: color 0.15s ease;
+}
+
+@media (min-width: 48rem) {
+  .site-header nav {
+    gap: 1.75rem;
+  }
+  .nav-link {
+    display: inline-block;
+  }
 }
 
 .nav-link:hover {

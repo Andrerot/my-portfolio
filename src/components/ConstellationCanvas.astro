@@ -135,15 +135,23 @@
       const heroReservedWidth = isMobile ? 0 : Math.min(width * 0.42, 500);
       const skyAreaWidth = width - heroReservedWidth;
 
-      // Adaptive Polaris Center: perfectly positioned in the available celestial quadrant
-      const polX = (heroReservedWidth + skyAreaWidth * 0.52) + offsetX * 0.7;
-      const polY = (height * 0.48) + offsetY * 0.7;
+      // Adaptive Polaris Center: centered on mobile, right-aligned on desktop
+      const polX = isMobile
+        ? width * 0.5 + offsetX * 0.4
+        : heroReservedWidth + skyAreaWidth * 0.52 + offsetX * 0.7;
 
-      // Scale (pixels per celestial degree) bounded safely so NO constellation is cut off at any zoom/resolution
-      const maxRadiusDeg = 44; // From Polaris to Alkaid (farthest star) is ~41°
-      const maxAllowedVertical = height * 0.38;
-      const maxAllowedHorizontal = (skyAreaWidth / 2) * 0.78;
-      const pxPerDeg = Math.max(2.8, Math.min(5.5, Math.min(maxAllowedVertical, maxAllowedHorizontal) / maxRadiusDeg));
+      const polY = isMobile
+        ? height * 0.28 + offsetY * 0.4
+        : height * 0.48 + offsetY * 0.7;
+
+      // Scale (pixels per celestial degree) bounded safely for both mobile and desktop
+      const maxRadiusDeg = 44;
+      const maxAllowedVertical = isMobile ? height * 0.24 : height * 0.38;
+      const maxAllowedHorizontal = isMobile ? (width / 2) * 0.85 : (skyAreaWidth / 2) * 0.78;
+      const pxPerDeg = Math.max(
+        isMobile ? 2.2 : 2.8,
+        Math.min(5.5, Math.min(maxAllowedVertical, maxAllowedHorizontal) / maxRadiusDeg)
+      );
 
       // Draw faint galactic nebula glow around Cassiopeia & upper sky
       const milkyGrad = ctx.createRadialGradient(
@@ -317,7 +325,6 @@
         ctx.fillText("URSA MAJOR", umPoints[5].x - 15, umPoints[5].y + 24);
         ctx.font = "400 9.5px system-ui, sans-serif";
         ctx.fillStyle = "rgba(148, 163, 184, 0.65)";
-        ctx.fillText("(Il Grande Carro)", umPoints[5].x - 15, umPoints[5].y + 36);
 
         ctx.font = "600 11px system-ui, sans-serif";
         ctx.fillStyle = "rgba(147, 197, 253, 0.75)";
