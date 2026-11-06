@@ -3,11 +3,12 @@
 Obiettivo: sito veloce, curato e a costo zero da allegare alle candidature.
 Stack: Astro + isole React + Tailwind (v4) + GSAP + Lenis. Hosting: Cloudflare Pages.
 
-## Direzione di design (da rivedere insieme)
-- Palette: Carta `#ECEFF3`, Inchiostro `#101828`, Blu `#2447F5`, Griglia `#CBD3DD`.
-- Font: Bricolage Grotesque (titoli, asse peso variabile) + Public Sans (testo).
-- Momento memorabile unico: il nome nell'hero passa da sottile a pesante lettera per lettera. Il resto resta sobrio.
-- Regole: niente animazioni a pioggia, rispettare `prefers-reduced-motion`, mobile first.
+## Direzione di design
+- Palette: Spazio profondo cosmico `#070B14`, Carte stellari `#0F172A`, Bagliore Pulsar Blu `#3B82F6`, Stella Polare Oro `#FACC15`, Polvere di stelle `#94A3B8`.
+- Font: Bricolage Grotesque (titoli cinetici, asse peso variabile) + Public Sans (testo).
+- Momento memorabile unico: Canvas interattivo della volta celeste con le costellazioni del Grande Carro (Ursa Major) e Cassiopea che puntano alla Stella Polare (Polaris) + animazione cinetica del nome.
+- Filosofia: "The North Star Principle" (Attitudine, problem solving sistemico e soft skill > pura memorizzazione mnemonica della sintassi nell'era AI).
+- Hosting: GitHub Pages (automatizzato con GitHub Actions CI/CD a costo zero).
 
 ## Fase 0 - Setup (30 min)
 - [x] Inizializzazione progetto Astro con TypeScript
@@ -44,7 +45,9 @@ Stack: Astro + isole React + Tailwind (v4) + GSAP + Lenis. Hosting: Cloudflare P
 - [x] Meta tag, Open Graph image (`public/og.png`), Twitter cards e `robots.txt`
 - [x] Navigazione da tastiera e focus visibile (outline custom)
 
-## Fase 5 - Deploy
-- [ ] Collegare il repo a Cloudflare Pages (build: `npm run build`, output: `dist`)
-- [ ] Sottodominio `.pages.dev` oppure dominio personalizzato (facoltativo)
-- [ ] Inserire il link nel CV e su LinkedIn
+## Fase 5 - Deploy (GitHub Pages)
+- [x] Configurato workflow automatico GitHub Actions `.github/workflows/deploy.yml`
+- [x] Configurato `astro.config.mjs` con `site` e `base` per GitHub Pages (`https://andrerot.github.io/my-portfolio`)
+- [ ] Push sul branch `main` del repository GitHub (`https://github.com/Andrerot/my-portfolio.git`)
+- [ ] Abilitare GitHub Pages nelle impostazioni della repo su GitHub (Source: "GitHub Actions")
+- [ ] Inserire il link definitivo nel CV e su LinkedIn

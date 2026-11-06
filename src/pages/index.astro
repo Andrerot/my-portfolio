@@ -1,9 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import ProjectGallery from "../components/ProjectGallery";
+import ConstellationCanvas from "../components/ConstellationCanvas.astro";
 
 const name = "Andrea Montillo";
 const letters = [...name];
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const experiences = [
   {
@@ -85,7 +87,7 @@ const skillCategories = [
         <span class="brand-badge">SWE</span>
       </a>
       <nav aria-label="Main Navigation">
-        <a href="#about" class="nav-link">About</a>
+        <a href="#philosophy" class="nav-link">Philosophy</a>
         <a href="#experience" class="nav-link">Experience</a>
         <a href="#projects" class="nav-link">Projects</a>
         <a href="#skills" class="nav-link">Skills</a>
@@ -95,12 +97,14 @@ const skillCategories = [
   </header>
 
   <main id="top">
-    <!-- Hero Section -->
+    <!-- Hero Section with Celestial Constellations Canvas -->
     <section class="hero">
+      <ConstellationCanvas />
+
       <div class="wrap">
         <div class="hero-status">
           <span class="status-dot"></span>
-          <span>Product Software Engineer @ CCH Tagetik · Building with AI Agents</span>
+          <span>Product Software Engineer @ CCH Tagetik · Navigating with AI Agents</span>
         </div>
 
         <h1 aria-label={name}>
@@ -123,7 +127,7 @@ const skillCategories = [
           <a class="btn-secondary" href="#experience">
             <span>View Experience</span>
           </a>
-          <a class="btn-secondary" href="/cv.pdf" target="_blank" rel="noopener noreferrer">
+          <a class="btn-secondary" href={`${base}/cv.pdf`} target="_blank" rel="noopener noreferrer">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             <span>Resume (PDF)</span>
           </a>
@@ -131,21 +135,34 @@ const skillCategories = [
       </div>
     </section>
 
-    <!-- About & Engineering Philosophy -->
-    <section class="block" id="about">
+    <!-- The North Star Principle (Engineering Philosophy & AI Shift) -->
+    <section class="block" id="philosophy">
       <div class="wrap">
-        <div class="section-label">Engineering Ethos</div>
-        <h2 class="section-title">Bridging Rigorous Engineering with Next-Gen AI</h2>
+        <div class="section-label">
+          <span>✨</span>
+          <span>The North Star Principle</span>
+        </div>
+        <h2 class="section-title">Mindset & Problem Clarity Over Raw Syntax</h2>
 
-        <div class="agentic-banner">
-          <div class="agentic-badge">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-            <span>The 2026 Shift: Agentic Development</span>
+        <div class="northstar-banner">
+          <div class="northstar-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span>Navigating the 2026 AI Era</span>
           </div>
-          <h3>Software engineering is evolving — and I build with it.</h3>
+
+          <h3>In the age of AI, attitude and systemic vision are the true differentiator.</h3>
+
           <p>
-            From high-throughput distributed systems at Deloitte and CCH Tagetik to autonomous agentic workflows, I believe the future belongs to engineers who combine deep foundational knowledge (distributed systems, security, information theory) with autonomous AI tooling. This entire portfolio was co-engineered live using autonomous agent workflows, proving speed, precision, and modern craftsmanship.
+            Vertical syntax memorization is no longer the bottleneck of software engineering. With intelligent AI agents capable of generating, refactoring, and debugging implementations at lighting speed, an engineer's true value lies in <strong>holistic problem comprehension</strong>: grasping real functional and business requirements, decomposing complex distributed systems, and maintaining an relentlessly proactive mindset.
           </p>
+
+          <p>
+            High emotional intelligence, adaptability, clear communication, and architectural responsibility matter far more than knowing one specific framework by heart. AI multiplies capability, but human attitude defines direction.
+          </p>
+
+          <div class="northstar-quote">
+            "Just as navigators rely on Ursa Major and Cassiopeia to pinpoint Polaris in the dark sky, technology stacks and frameworks revolve — but clear problem solving, intellectual curiosity, and strong soft skills remain the constant North Star."
+          </div>
         </div>
       </div>
     </section>
@@ -153,7 +170,10 @@ const skillCategories = [
     <!-- Experience Timeline -->
     <section class="block" id="experience">
       <div class="wrap">
-        <div class="section-label">Career Journey</div>
+        <div class="section-label">
+          <span>🪐</span>
+          <span>Career Journey</span>
+        </div>
         <h2 class="section-title">Work Experience & Education</h2>
 
         <div class="timeline">
@@ -180,10 +200,13 @@ const skillCategories = [
     <!-- Projects Section with Interactive React Island -->
     <section class="block" id="projects">
       <div class="wrap">
-        <div class="section-label">Selected Work & Experiments</div>
+        <div class="section-label">
+          <span>🚀</span>
+          <span>Selected Work & Experiments</span>
+        </div>
         <h2 class="section-title">Engineering Projects & Indie Lab</h2>
 
-        <p class="text-[#475467] text-lg max-w-2xl mb-8">
+        <p class="text-[#94A3B8] text-lg max-w-2xl mb-8">
           From enterprise distributed architectures and autonomous AI tooling to indie game prototypes in Godot and personal utilities.
         </p>
 
@@ -192,13 +215,16 @@ const skillCategories = [
       </div>
     </section>
 
-    <!-- Skills Section -->
+    <!-- Skills Section with AI Multiplier Callout -->
     <section class="block" id="skills">
       <div class="wrap">
-        <div class="section-label">Toolkit</div>
-        <h2 class="section-title">Technical Competencies</h2>
+        <div class="section-label">
+          <span>⚡</span>
+          <span>Core Competencies</span>
+        </div>
+        <h2 class="section-title">Technical Launchpad & The AI Multiplier</h2>
 
-        <div class="skills-grid">
+        <div class="skills-grid mb-8">
           {skillCategories.map((cat) => (
             <div class="skill-box">
               <h3>
@@ -209,6 +235,19 @@ const skillCategories = [
             </div>
           ))}
         </div>
+
+        <!-- AI Multiplier Callout -->
+        <div class="p-6 rounded-xl border border-[#3B82F6]/30 bg-[#0F172A]/90 shadow-lg shadow-blue-500/5">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-xl">🌌</span>
+            <span class="font-bold text-[#60A5FA] text-sm uppercase tracking-wider">
+              Limitless Stack Adaptability via AI Agents
+            </span>
+          </div>
+          <p class="text-[#94A3B8] text-[0.98rem] leading-relaxed m-0">
+            The technologies above represent my everyday foundation. However, thanks to a solid grounding in Computer Science (algorithms, protocols, distributed paradigms) coupled with <strong class="text-[#F8FAFC]">autonomous AI agent workflows</strong>, adapting to any new language, tool, or cloud provider is virtually immediate. Tools are variable; engineering discipline is universal.
+          </p>
+        </div>
       </div>
     </section>
 
@@ -218,7 +257,7 @@ const skillCategories = [
         <div class="contact-card">
           <h2>Let's build something extraordinary.</h2>
           <p>
-            I am always open to discussing distributed architectures, engineering opportunities, and autonomous AI systems.
+            Always excited to discuss distributed systems, architectural challenges, and autonomous AI engineering.
           </p>
           <div class="contact-links">
             <a class="btn" href="mailto:and.montillo@gmail.com">
@@ -237,7 +276,7 @@ const skillCategories = [
             <a class="btn-secondary" href="https://linkedin.com/in/andreamontillo" target="_blank" rel="noopener noreferrer">
               <span>LinkedIn Profile ↗</span>
             </a>
-            <a class="btn-secondary" href="https://github.com/andreamontillo" target="_blank" rel="noopener noreferrer">
+            <a class="btn-secondary" href="https://github.com/Andrerot" target="_blank" rel="noopener noreferrer">
               <span>GitHub ↗</span>
             </a>
           </div>
@@ -253,7 +292,7 @@ const skillCategories = [
         © {new Date().getFullYear()} Andrea Montillo. All rights reserved.
       </div>
       <div>
-        Engineered with Astro, React, Tailwind v4 & GSAP · Edge-hosted on Cloudflare
+        Celestial Engineering · Built with Astro, React, Tailwind v4 & GSAP
       </div>
     </div>
   </footer>
