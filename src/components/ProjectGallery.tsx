@@ -21,7 +21,7 @@ const ALL_PROJECTS: Project[] = [
     badge: "Built Live with Agents",
     stack: ["Astro", "TypeScript", "Tailwind v4", "GSAP", "Lenis", "GitHub Pages"],
     description:
-      "Engineered via autonomous AI agent pair programming. Celestial deep-space architecture, kinetic variable typography, fluid inertial scrolling, and edge deployment with 100/100 Lighthouse performance.",
+      "Engineered via autonomous AI agent pair programming. Celestial deep-space hero with accurate circumpolar constellations, kinetic typography, fluid inertial scrolling, and edge deployment with 100/100 Lighthouse performance.",
     link: "https://github.com/Andrerot/my-portfolio",
   },
   {
@@ -130,8 +130,8 @@ export default function ProjectGallery() {
               onClick={() => setActiveFilter(f.key)}
               className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 cursor-pointer ${
                 isActive
-                  ? "bg-[#3B82F6] text-white shadow-lg shadow-blue-500/25 scale-[1.02]"
-                  : "bg-[#0F172A] hover:bg-[#1E293B] text-[#94A3B8] hover:text-[#F8FAFC] border border-[#1E293B]"
+                  ? "bg-[#2447F5] text-white shadow-md shadow-blue-500/20 scale-[1.02]"
+                  : "bg-white/90 hover:bg-white text-[#475467] hover:text-[#101828] border border-[#CBD3DD]"
               }`}
             >
               {f.label}
@@ -156,18 +156,18 @@ export default function ProjectGallery() {
             <div>
               {/* Header: Category + Badge */}
               <div className="flex items-center justify-between gap-2 mb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#3B82F6]">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#2447F5]">
                   {p.categoryLabel}
                 </span>
                 {p.badge && (
-                  <span className="inline-flex items-center text-[0.72rem] font-semibold px-2 py-0.5 rounded-full bg-[#3B82F6]/15 text-[#93C5FD] border border-[#3B82F6]/30">
+                  <span className="inline-flex items-center text-[0.72rem] font-semibold px-2 py-0.5 rounded-full bg-[#2447F5]/10 text-[#2447F5] border border-[#2447F5]/20">
                     {p.badge}
                   </span>
                 )}
               </div>
 
               {/* Title & Link */}
-              <h3 className="text-xl font-bold mb-2 text-[#F8FAFC] group-hover:text-[#60A5FA] transition-colors">
+              <h3 className="text-xl font-bold mb-2 text-[#101828] group-hover:text-[#2447F5] transition-colors">
                 {p.link ? (
                   <a
                     href={p.link}
@@ -177,7 +177,7 @@ export default function ProjectGallery() {
                   >
                     <span>{p.title}</span>
                     <svg
-                      className="w-4 h-4 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                      className="w-4 h-4 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-[#2447F5]"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -192,7 +192,7 @@ export default function ProjectGallery() {
               </h3>
 
               {/* Description */}
-              <p className="text-[#94A3B8] text-[0.95rem] leading-relaxed mb-6">
+              <p className="text-[#475467] text-[0.95rem] leading-relaxed mb-6">
                 {p.description}
               </p>
             </div>
@@ -208,8 +208,8 @@ export default function ProjectGallery() {
               </div>
 
               {p.isPrivateOrToy && (
-                <div className="text-[0.75rem] text-[#FACC15]/80 italic mt-3 flex items-center gap-1.5">
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#FACC15]"></span>
+                <div className="text-[0.75rem] text-amber-800 italic mt-3 flex items-center gap-1.5">
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-500"></span>
                   <span>Personal exploration & indie prototype</span>
                 </div>
               )}
