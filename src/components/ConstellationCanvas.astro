@@ -1,5 +1,5 @@
 ---
-// ConstellationCanvas.astro
+// ConstellationCanvas.astro - Accurate Circumpolar Sky Projection (Mid-Northern Latitude / Italy)
 ---
 <canvas id="celestial-canvas" class="celestial-canvas" aria-hidden="true"></canvas>
 
@@ -12,7 +12,7 @@
     height: 100%;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.85;
+    opacity: 0.95;
   }
 </style>
 
@@ -40,34 +40,49 @@
       targetY = e.clientY;
     });
 
-    // Resize handler
     window.addEventListener("resize", () => {
       width = canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
       height = canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
     });
 
-    // Background random stars
-    interface Star {
-      x: number;
-      y: number;
-      radius: number;
-      alpha: number;
-      speed: number;
-      baseAlpha: number;
-    }
+    // 1. Generate Deep Field Background Stars with realistic magnitudes & colors (blue, white, warm)
+    const starCount = Math.min(180, Math.floor((width * height) / 5500));
+    const starPalette = ["#FFFFFF", "#E0E7FF", "#BAE6FD", "#FEF08A", "#DDD6FE"];
 
-    const starCount = Math.min(100, Math.floor((width * height) / 9000));
-    const bgStars: Star[] = Array.from({ length: starCount }, () => {
-      const baseAlpha = Math.random() * 0.6 + 0.2;
+    const bgStars = Array.from({ length: starCount }, () => {
+      const baseAlpha = Math.random() * 0.7 + 0.2;
       return {
         x: Math.random() * width,
         y: Math.random() * height,
-        radius: Math.random() * 1.2 + 0.4,
+        radius: Math.random() < 0.85 ? Math.random() * 1.1 + 0.3 : Math.random() * 1.8 + 1.2,
+        color: starPalette[Math.floor(Math.random() * starPalette.length)],
         alpha: baseAlpha,
-        speed: Math.random() * 0.02 + 0.005,
         baseAlpha,
+        speed: Math.random() * 0.02 + 0.005,
       };
     });
+
+    // 2. Real Astronomical Coordinates (Right Ascension in degrees, Declination in degrees)
+    // Polaris: Center of rotation at Dec = +89.3°
+    // Ursa Major & Cassiopeia are circumpolar constellations on opposite sides of the pole (Delta RA ~ 180° / 12h)
+    const ASTRO_DATA = {
+      ursaMajor: [
+        { name: "Alkaid", ra: 206.9, dec: 49.3, mag: 1.85 },
+        { name: "Mizar",  ra: 200.9, dec: 54.9, mag: 2.23 },
+        { name: "Alioth", ra: 193.5, dec: 55.9, mag: 1.76 },
+        { name: "Megrez", ra: 183.9, dec: 57.0, mag: 3.32 },
+        { name: "Phecda", ra: 176.9, dec: 53.7, mag: 2.41 },
+        { name: "Merak",  ra: 165.5, dec: 56.4, mag: 2.34 }, // Pointer 1
+        { name: "Dubhe",  ra: 165.9, dec: 61.8, mag: 1.79 }, // Pointer 2
+      ],
+      cassiopeia: [
+        { name: "Caph",    ra: 2.3,   dec: 59.2, mag: 2.28 },
+        { name: "Schedar", ra: 10.1,  dec: 56.5, mag: 2.24 },
+        { name: "Navi",    ra: 14.2,  dec: 60.7, mag: 2.15 },
+        { name: "Ruchbah", ra: 21.4,  dec: 60.2, mag: 2.68 },
+        { name: "Segin",   ra: 28.6,  dec: 63.7, mag: 3.35 },
+      ],
+    };
 
     let time = 0;
 
@@ -75,160 +90,191 @@
       if (!ctx) return;
       ctx.clearRect(0, 0, width, height);
 
-      // Smooth parallax
-      mouseX += (targetX - mouseX) * 0.05;
-      mouseY += (targetY - mouseY) * 0.05;
-      const offsetX = ((mouseX - width / 2) / width) * 20;
-      const offsetY = ((mouseY - height / 2) / height) * 20;
+      // Smooth mouse parallax
+      mouseX += (targetX - mouseX) * 0.04;
+      mouseY += (targetY - mouseY) * 0.04;
+      const offsetX = ((mouseX - width / 2) / width) * 25;
+      const offsetY = ((mouseY - height / 2) / height) * 25;
 
-      // 1. Draw twinkling background stars
       time += 0.02;
+
+      // Draw background stars
       bgStars.forEach((s) => {
-        const twinkle = Math.sin(time * s.speed * 80) * 0.3;
+        const twinkle = Math.sin(time * s.speed * 70) * 0.25;
         const currentAlpha = Math.max(0.1, Math.min(1, s.baseAlpha + twinkle));
         ctx.beginPath();
-        ctx.arc(s.x + offsetX * 0.3, s.y + offsetY * 0.3, s.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(224, 231, 255, ${currentAlpha})`;
+        ctx.arc(s.x + offsetX * 0.25, s.y + offsetY * 0.25, s.radius, 0, Math.PI * 2);
+        ctx.fillStyle = s.color;
+        ctx.globalAlpha = currentAlpha;
         ctx.fill();
       });
+      ctx.globalAlpha = 1;
 
-      // Constellation anchor positions (relative to width/height)
-      // Polaris (North Star) — focal guide point
+      // Celestial Geometry & Projection
+      // In Italy (Lat ~41°N), looking North:
+      // Polaris sits about 41° above northern horizon.
+      // We position Polaris in the upper-right / central quadrant to give the night sky grandeur.
       const isMobile = width < 768;
-      const polX = (isMobile ? width * 0.72 : width * 0.62) + offsetX * 0.8;
-      const polY = (isMobile ? height * 0.32 : height * 0.38) + offsetY * 0.8;
+      const polX = (isMobile ? width * 0.75 : width * 0.65) + offsetX * 0.7;
+      const polY = (isMobile ? height * 0.32 : height * 0.38) + offsetY * 0.7;
+
+      // Angular scale: distance from Polaris in pixels per degree of co-declination (90° - dec)
+      // On real sky, Dubhe is ~28.2° from Polaris, Merak is ~33.6° from Polaris.
+      // Dubhe-Merak distance = ~5.4°. Distance from Dubhe to Polaris is exactly 5.2x Dubhe-Merak!
+      const pxPerDeg = isMobile ? Math.min(width, height) / 80 : Math.min(width, height) / 58;
+
+      // Sky rotation angle: typical evening sky in mid-latitudes (autumn/spring circumpolar orientation)
+      // Ursa Major towards the lower-left, Cassiopeia high up to the upper-right
+      const skyRotation = (-55 * Math.PI) / 180;
+
+      // Project celestial coordinate (RA, Dec) into 2D polar projection around Polaris
+      function projectStar(raDeg: number, decDeg: number) {
+        const r = (90 - decDeg) * pxPerDeg;
+        const theta = (raDeg * Math.PI) / 180 + skyRotation;
+        return {
+          x: polX + r * Math.cos(theta),
+          y: polY + r * Math.sin(theta),
+        };
+      }
+
+      const umPoints = ASTRO_DATA.ursaMajor.map((s) => ({
+        ...projectStar(s.ra, s.dec),
+        name: s.name,
+        mag: s.mag,
+      }));
+
+      const casPoints = ASTRO_DATA.cassiopeia.map((s) => ({
+        ...projectStar(s.ra, s.dec),
+        name: s.name,
+        mag: s.mag,
+      }));
+
+      // --- Draw faint Celestial Reference Meridian ---
+      ctx.beginPath();
+      ctx.strokeStyle = "rgba(59, 130, 246, 0.08)";
+      ctx.lineWidth = 1;
+      ctx.arc(polX, polY, 30 * pxPerDeg, 0, Math.PI * 2); // 60° Dec parallel
+      ctx.stroke();
 
       // --- URSA MAJOR (The Big Dipper / Il Grande Carro) ---
-      // 7 stars: Alkaid, Mizar, Alioth, Megrez, Phecda, Merak, Dubhe
-      // Positioned to the bottom-left of Polaris, with Merak -> Dubhe pointing straight to Polaris
-      const umBaseX = (isMobile ? width * 0.15 : width * 0.24) + offsetX * 0.6;
-      const umBaseY = (isMobile ? height * 0.62 : height * 0.65) + offsetY * 0.6;
-      const scale = isMobile ? 0.6 : 0.95;
-
-      const ursaMajor = [
-        { name: "Alkaid", x: umBaseX - 140 * scale, y: umBaseY + 50 * scale },
-        { name: "Mizar",  x: umBaseX - 95 * scale,  y: umBaseY + 28 * scale },
-        { name: "Alioth", x: umBaseX - 50 * scale,  y: umBaseY + 18 * scale },
-        { name: "Megrez", x: umBaseX - 10 * scale,  y: umBaseY + 10 * scale },
-        { name: "Phecda", x: umBaseX - 12 * scale,  y: umBaseY + 55 * scale },
-        { name: "Merak",  x: umBaseX + 50 * scale,  y: umBaseY + 48 * scale },
-        { name: "Dubhe",  x: umBaseX + 55 * scale,  y: umBaseY + 3 * scale },
-      ];
-
-      // Draw Ursa Major connecting lines
+      // Connections:
+      // Handle: Alkaid(0) -> Mizar(1) -> Alioth(2) -> Megrez(3)
+      // Bowl: Megrez(3) -> Phecda(4) -> Merak(5) -> Dubhe(6) -> Megrez(3)
       ctx.beginPath();
-      ctx.strokeStyle = "rgba(96, 165, 250, 0.35)";
-      ctx.lineWidth = 1.2;
-      // Handle: Alkaid -> Mizar -> Alioth -> Megrez
-      ctx.moveTo(ursaMajor[0].x, ursaMajor[0].y);
-      ctx.lineTo(ursaMajor[1].x, ursaMajor[1].y);
-      ctx.lineTo(ursaMajor[2].x, ursaMajor[2].y);
-      ctx.lineTo(ursaMajor[3].x, ursaMajor[3].y);
-      // Bowl: Megrez -> Phecda -> Merak -> Dubhe -> Megrez
-      ctx.lineTo(ursaMajor[4].x, ursaMajor[4].y);
-      ctx.lineTo(ursaMajor[5].x, ursaMajor[5].y);
-      ctx.lineTo(ursaMajor[6].x, ursaMajor[6].y);
-      ctx.lineTo(ursaMajor[3].x, ursaMajor[3].y);
+      ctx.strokeStyle = "rgba(147, 197, 253, 0.45)"; // Soft luminous starlight blue
+      ctx.lineWidth = 1.3;
+      ctx.moveTo(umPoints[0].x, umPoints[0].y);
+      ctx.lineTo(umPoints[1].x, umPoints[1].y);
+      ctx.lineTo(umPoints[2].x, umPoints[2].y);
+      ctx.lineTo(umPoints[3].x, umPoints[3].y);
+      ctx.lineTo(umPoints[4].x, umPoints[4].y);
+      ctx.lineTo(umPoints[5].x, umPoints[5].y);
+      ctx.lineTo(umPoints[6].x, umPoints[6].y);
+      ctx.lineTo(umPoints[3].x, umPoints[3].y);
       ctx.stroke();
 
-      // Pointer Ray: Merak -> Dubhe -> POLARIS (Dashed Guide Line)
+      // --- THE POINTER LINE: Merak (5) -> Dubhe (6) -> POLARIS ---
+      // This is the classic 5x rule of celestial navigation!
       ctx.beginPath();
       ctx.setLineDash([4, 6]);
-      ctx.strokeStyle = "rgba(250, 204, 21, 0.45)"; // Golden pointer trail
-      ctx.lineWidth = 1.2;
-      ctx.moveTo(ursaMajor[5].x, ursaMajor[5].y);
-      ctx.lineTo(ursaMajor[6].x, ursaMajor[6].y);
-      ctx.lineTo(polX, polY);
+      ctx.strokeStyle = "rgba(250, 204, 21, 0.65)"; // Radiant golden pointer beam
+      ctx.lineWidth = 1.4;
+      ctx.moveTo(umPoints[5].x, umPoints[5].y); // Merak
+      ctx.lineTo(umPoints[6].x, umPoints[6].y); // Dubhe
+      ctx.lineTo(polX, polY);                    // Polaris
       ctx.stroke();
-      ctx.setLineDash([]); // reset
+      ctx.setLineDash([]);
 
-      // --- CASSIOPEIA (The Queen, 'W' shape) ---
-      // 5 stars: Caph, Schedar, Navi (Gamma Cas), Ruchbah, Segin
-      // Positioned to the upper-right of Polaris
-      const casBaseX = (isMobile ? width * 0.78 : width * 0.82) + offsetX * 0.6;
-      const casBaseY = (isMobile ? height * 0.18 : height * 0.18) + offsetY * 0.6;
-
-      const cassiopeia = [
-        { name: "Caph",     x: casBaseX - 55 * scale, y: casBaseY - 15 * scale },
-        { name: "Schedar",  x: casBaseX - 25 * scale, y: casBaseY + 12 * scale },
-        { name: "Navi",     x: casBaseX + 5 * scale,  y: casBaseY - 10 * scale },
-        { name: "Ruchbah",  x: casBaseX + 35 * scale, y: casBaseY + 15 * scale },
-        { name: "Segin",    x: casBaseX + 65 * scale, y: casBaseY - 5 * scale },
-      ];
-
-      // Draw Cassiopeia lines (W-shape)
+      // --- CASSIOPEIA (The Queen, 'W' Shape) ---
+      // Caph(0) -> Schedar(1) -> Navi(2) -> Ruchbah(3) -> Segin(4)
       ctx.beginPath();
-      ctx.strokeStyle = "rgba(96, 165, 250, 0.35)";
-      ctx.lineWidth = 1.2;
-      ctx.moveTo(cassiopeia[0].x, cassiopeia[0].y);
-      for (let i = 1; i < cassiopeia.length; i++) {
-        ctx.lineTo(cassiopeia[i].x, cassiopeia[i].y);
+      ctx.strokeStyle = "rgba(147, 197, 253, 0.45)";
+      ctx.lineWidth = 1.3;
+      ctx.moveTo(casPoints[0].x, casPoints[0].y);
+      for (let i = 1; i < casPoints.length; i++) {
+        ctx.lineTo(casPoints[i].x, casPoints[i].y);
       }
       ctx.stroke();
 
-      // Cassiopeia Pointer Ray towards Polaris (Schedar & Caph bisector pointing to Polaris)
+      // Cassiopeia's pointer line: bisector of the two V-shapes pointing towards Polaris
       ctx.beginPath();
       ctx.setLineDash([3, 6]);
-      ctx.strokeStyle = "rgba(129, 140, 248, 0.35)";
-      ctx.lineWidth = 1;
-      ctx.moveTo(cassiopeia[2].x, cassiopeia[2].y);
+      ctx.strokeStyle = "rgba(167, 139, 250, 0.45)"; // Celestial violet guide
+      ctx.lineWidth = 1.1;
+      ctx.moveTo(casPoints[2].x, casPoints[2].y); // Navi
       ctx.lineTo(polX, polY);
       ctx.stroke();
       ctx.setLineDash([]);
 
-      // Draw Constellation Stars (Ursa Major + Cassiopeia)
-      const allConstStars = [...ursaMajor, ...cassiopeia];
-      allConstStars.forEach((star) => {
-        // Outer glow
+      // --- Draw Star Dots (Ursa Major + Cassiopeia) with Magnitude-scaled glow ---
+      const allStars = [...umPoints, ...casPoints];
+      allStars.forEach((star) => {
+        // Brightness scaled inversely by magnitude (lower mag = brighter)
+        const radius = Math.max(1.8, 3.8 - star.mag * 0.5);
+
+        // Ambient glow
         ctx.beginPath();
-        ctx.arc(star.x, star.y, 4, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(96, 165, 250, 0.3)";
+        ctx.arc(star.x, star.y, radius * 2.8, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(96, 165, 250, 0.25)";
         ctx.fill();
 
-        // Inner star
+        // Core star
         ctx.beginPath();
-        ctx.arc(star.x, star.y, 1.8, 0, Math.PI * 2);
+        ctx.arc(star.x, star.y, radius, 0, Math.PI * 2);
         ctx.fillStyle = "#FFFFFF";
         ctx.fill();
       });
 
-      // --- POLARIS (The North Star) - Radiant Focal Point ---
-      const pulse = Math.sin(time * 2.5) * 0.2 + 0.8;
+      // --- POLARIS (The North Star) ---
+      const pulse = Math.sin(time * 2.2) * 0.25 + 0.85;
 
-      // Deep golden/blue nebula halo
-      const grad = ctx.createRadialGradient(polX, polY, 2, polX, polY, 24 * pulse);
-      grad.addColorStop(0, "rgba(250, 204, 21, 0.8)");
-      grad.addColorStop(0.3, "rgba(59, 130, 246, 0.4)");
-      grad.addColorStop(1, "rgba(59, 130, 246, 0)");
+      // Outer golden/cyan pulsar nebula
+      const polGrad = ctx.createRadialGradient(polX, polY, 2, polX, polY, 32 * pulse);
+      polGrad.addColorStop(0, "rgba(250, 204, 21, 0.95)");
+      polGrad.addColorStop(0.35, "rgba(59, 130, 246, 0.45)");
+      polGrad.addColorStop(0.7, "rgba(59, 130, 246, 0.15)");
+      polGrad.addColorStop(1, "rgba(59, 130, 246, 0)");
       ctx.beginPath();
-      ctx.arc(polX, polY, 24 * pulse, 0, Math.PI * 2);
-      ctx.fillStyle = grad;
+      ctx.arc(polX, polY, 32 * pulse, 0, Math.PI * 2);
+      ctx.fillStyle = polGrad;
       ctx.fill();
 
-      // Cross 4-point lens flare on Polaris
+      // 4-point diffraction spike flare
       ctx.beginPath();
-      ctx.strokeStyle = `rgba(255, 255, 255, ${0.4 * pulse})`;
-      ctx.lineWidth = 1;
-      ctx.moveTo(polX - 14 * pulse, polY);
-      ctx.lineTo(polX + 14 * pulse, polY);
-      ctx.moveTo(polX, polY - 14 * pulse);
-      ctx.lineTo(polX, polY + 14 * pulse);
+      ctx.strokeStyle = `rgba(255, 255, 255, ${0.55 * pulse})`;
+      ctx.lineWidth = 1.2;
+      ctx.moveTo(polX - 18 * pulse, polY);
+      ctx.lineTo(polX + 18 * pulse, polY);
+      ctx.moveTo(polX, polY - 18 * pulse);
+      ctx.lineTo(polX, polY + 18 * pulse);
       ctx.stroke();
 
-      // Core star
+      // Polaris core
       ctx.beginPath();
-      ctx.arc(polX, polY, 3, 0, Math.PI * 2);
+      ctx.arc(polX, polY, 3.5, 0, Math.PI * 2);
       ctx.fillStyle = "#FFFBEB";
       ctx.fill();
 
-      // Subtle Polaris Label
+      // Constellation & Polaris Typography Tags (subtle, clean)
       if (!isMobile) {
+        ctx.font = "600 12px system-ui, sans-serif";
+        ctx.fillStyle = "rgba(250, 204, 21, 0.9)";
+        ctx.fillText("POLARIS", polX + 14, polY - 8);
+        ctx.font = "400 10px system-ui, sans-serif";
+        ctx.fillStyle = "rgba(148, 163, 184, 0.85)";
+        ctx.fillText("The North Star · Celestial Pole", polX + 14, polY + 6);
+
+        // Constellation labels
         ctx.font = "600 11px system-ui, sans-serif";
-        ctx.fillStyle = "rgba(250, 204, 21, 0.85)";
-        ctx.fillText("POLARIS", polX + 12, polY - 8);
-        ctx.font = "400 9px system-ui, sans-serif";
-        ctx.fillStyle = "rgba(148, 163, 184, 0.75)";
-        ctx.fillText("The North Star · Problem Clarity", polX + 12, polY + 5);
+        ctx.fillStyle = "rgba(147, 197, 253, 0.75)";
+        ctx.fillText("URSA MAJOR", umPoints[5].x - 15, umPoints[5].y + 24);
+        ctx.font = "400 9.5px system-ui, sans-serif";
+        ctx.fillStyle = "rgba(148, 163, 184, 0.65)";
+        ctx.fillText("(Il Grande Carro)", umPoints[5].x - 15, umPoints[5].y + 36);
+
+        ctx.font = "600 11px system-ui, sans-serif";
+        ctx.fillStyle = "rgba(147, 197, 253, 0.75)";
+        ctx.fillText("CASSIOPEIA", casPoints[1].x - 20, casPoints[1].y - 18);
       }
 
       if (!reduceMotion) {
@@ -239,7 +285,6 @@
     render();
   }
 
-  // Initialize on load and on Astro View Transitions navigation
   initCelestialCanvas();
   document.addEventListener("astro:page-load", initCelestialCanvas);
 </script>
