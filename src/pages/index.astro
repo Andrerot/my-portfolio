@@ -1,0 +1,79 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// TODO: sostituisci i placeholder con i tuoi dati reali
+const name = "Nome Cognome";
+const letters = [...name];
+
+const projects = [
+  { title: "Progetto uno", stack: "TypeScript, React, Node.js", text: "Problema risolto, scelte tecniche e risultato in due righe.", href: "#" },
+  { title: "Progetto due", stack: "Python, FastAPI, PostgreSQL", text: "Problema risolto, scelte tecniche e risultato in due righe.", href: "#" },
+  { title: "Progetto tre", stack: "C++, Linux", text: "Problema risolto, scelte tecniche e risultato in due righe.", href: "#" },
+];
+---
+<Layout title={`${name} | Ingegnere informatico`} description="Portfolio di un ingegnere informatico: progetti, competenze e contatti.">
+  <header class="site-header">
+    <div class="wrap">
+      <a href="#top">{name}</a>
+      <nav aria-label="Principale">
+        <a href="#progetti">Progetti</a>
+        <a href="#competenze">Competenze</a>
+        <a href="#contatti">Contatti</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <h1 aria-label={name}>
+          {letters.map((ch) => <span data-letter aria-hidden="true">{ch === " " ? "\u00A0" : ch}</span>)}
+        </h1>
+        <p>Ingegnere informatico. Scrivi qui in una frase cosa costruisci e che ruolo cerchi.</p>
+        <a class="btn" href="/cv.pdf">Scarica il CV</a>
+      </div>
+    </section>
+
+    <section class="block" id="progetti">
+      <div class="wrap">
+        <h2>Progetti</h2>
+        <ul class="projects">
+          {projects.map((p) => (
+            <li>
+              <div>
+                <h3><a href={p.href}>{p.title}</a></h3>
+                <span class="stack">{p.stack}</span>
+              </div>
+              <p>{p.text}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="block" id="competenze">
+      <div class="wrap">
+        <h2>Competenze</h2>
+        <div class="skills">
+          <div><h3>Linguaggi</h3><p>TypeScript, Python, C++, SQL</p></div>
+          <div><h3>Web e backend</h3><p>React, Astro, Node.js, REST</p></div>
+          <div><h3>Strumenti</h3><p>Git, Docker, Linux, CI/CD</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="contatti">
+      <div class="wrap">
+        <h2>Contatti</h2>
+        <p><a href="mailto:tuaemail@example.com">tuaemail@example.com</a></p>
+        <p><a href="https://github.com/">GitHub</a> · <a href="https://www.linkedin.com/">LinkedIn</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap">© {new Date().getFullYear()} {name}</div></footer>
+
+  <script>
+    import "../scripts/motion.ts";
+  </script>
+</Layout>
