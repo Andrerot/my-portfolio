@@ -89,9 +89,8 @@ function initMotion() {
     });
   }
 
-  // 4. "Cypher / Terminal Decrypt" Engine
+  // 4. "Cypher / Terminal Decrypt" Engine (Universal Event Delegation)
   const GLYPHS = "0123456789ABCDEF!<>-_/[]{}—=+*^?#_αβγλ";
-  const decryptElements = document.querySelectorAll<HTMLElement>("[data-decrypt]");
 
   function scramble(element: HTMLElement) {
     if (element.dataset.decrypting === "true") return;
@@ -104,7 +103,7 @@ function initMotion() {
 
     const length = originalText.length;
     let iteration = 0;
-    const maxIterations = 9;
+    const maxIterations = 8;
     const speed = 25; // ms per tick
 
     const interval = setInterval(() => {
@@ -128,23 +127,12 @@ function initMotion() {
     }, speed);
   }
 
-  decryptElements.forEach((el) => {
-    // Decrypt on hover
-    el.addEventListener("mouseenter", () => scramble(el));
-
-    // Optional decrypt once on scroll into view
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            scramble(el);
-            obs.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-    obs.observe(el);
+  // Universal event delegation for all [data-decrypt] elements (including React Islands)
+  document.addEventListener("mouseover", (e) => {
+    const target = (e.target as HTMLElement)?.closest<HTMLElement>("[data-decrypt]");
+    if (target) {
+      scramble(target);
+    }
   });
 
   // 5. Smooth Reveal for Cards & Sections

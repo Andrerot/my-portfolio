@@ -160,7 +160,7 @@ export default function ProjectGallery() {
                   {p.categoryLabel}
                 </span>
                 {p.badge && (
-                  <span className="inline-flex items-center text-[0.72rem] font-semibold px-2 py-0.5 rounded-full bg-[#2447F5]/10 text-[#2447F5] border border-[#2447F5]/20">
+                  <span data-decrypt className="inline-flex items-center text-[0.72rem] font-semibold px-2 py-0.5 rounded-full bg-[#2447F5]/10 text-[#2447F5] border border-[#2447F5]/20">
                     {p.badge}
                   </span>
                 )}
@@ -175,7 +175,7 @@ export default function ProjectGallery() {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5"
                   >
-                    <span>{p.title}</span>
+                    <span data-decrypt>{p.title}</span>
                     <svg
                       className="w-4 h-4 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-[#2447F5]"
                       viewBox="0 0 24 24"
@@ -187,7 +187,7 @@ export default function ProjectGallery() {
                     </svg>
                   </a>
                 ) : (
-                  <span>{p.title}</span>
+                  <span data-decrypt>{p.title}</span>
                 )}
               </h3>
 

@@ -144,7 +144,7 @@ const skillCategories = [
           <span>✨</span>
           <span data-decrypt>The North Star Principle</span>
         </div>
-        <h2 class="section-title">Mindset & Problem Clarity Over Raw Syntax</h2>
+        <h2 class="section-title" data-decrypt>Mindset & Problem Clarity Over Raw Syntax</h2>
 
         <div class="northstar-banner">
           <div class="northstar-badge">
@@ -152,7 +152,7 @@ const skillCategories = [
             <span data-decrypt>Navigating the 2026 AI Era</span>
           </div>
 
-          <h3>In the age of AI, attitude and systemic vision are the true differentiator.</h3>
+          <h3 data-decrypt>In the age of AI, attitude and systemic vision are the true differentiator.</h3>
 
           <p>
             Vertical syntax memorization is no longer the bottleneck of software engineering. With intelligent AI agents capable of generating, refactoring, and debugging implementations at lighting speed, an engineer's true value lies in <strong>holistic problem comprehension</strong>: grasping real functional and business requirements, decomposing complex distributed systems, and maintaining an relentlessly proactive mindset.
@@ -173,15 +173,15 @@ const skillCategories = [
           <span>🪐</span>
           <span data-decrypt>Career Journey</span>
         </div>
-        <h2 class="section-title">Work Experience & Education</h2>
+        <h2 class="section-title" data-decrypt>Work Experience & Education</h2>
 
         <div class="timeline">
           {experiences.map((exp) => (
             <div class="timeline-item">
               <div>
                 <div class="timeline-date">{exp.period}</div>
-                <h3 class="timeline-company">{exp.company}</h3>
-                <div class="timeline-role">{exp.role}</div>
+                <h3 class="timeline-company" data-decrypt>{exp.company}</h3>
+                <div class="timeline-role" data-decrypt>{exp.role}</div>
               </div>
               <div>
                 <ul class="timeline-bullets">
@@ -203,7 +203,7 @@ const skillCategories = [
           <span>🚀</span>
           <span data-decrypt>Selected Work & Experiments</span>
         </div>
-        <h2 class="section-title">Engineering Projects & Indie Lab</h2>
+        <h2 class="section-title" data-decrypt>Engineering Projects & Indie Lab</h2>
 
         <p class="text-[#475467] text-lg max-w-2xl mb-8">
           From enterprise distributed architectures and autonomous AI tooling to indie game prototypes in Godot and personal utilities.
@@ -221,14 +221,14 @@ const skillCategories = [
           <span>⚡</span>
           <span data-decrypt>Core Competencies</span>
         </div>
-        <h2 class="section-title">Technical Launchpad & The AI Multiplier</h2>
+        <h2 class="section-title" data-decrypt>Technical Launchpad & The AI Multiplier</h2>
 
         <div class="skills-grid mb-8">
           {skillCategories.map((cat) => (
             <div class="skill-box">
               <h3>
                 <span>{cat.icon}</span>
-                <span>{cat.title}</span>
+                <span data-decrypt>{cat.title}</span>
               </h3>
               <p>{cat.items}</p>
             </div>
