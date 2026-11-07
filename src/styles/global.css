@@ -251,9 +251,44 @@ a {
 
 .hero h1 span {
   display: inline-block;
-  --w: 800;
+  --w: 750;
   font-variation-settings: "wght" var(--w);
-  transition: color 0.2s ease;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.25s ease;
+  user-select: none;
+  cursor: default;
+}
+
+/* Starlight Shimmer effect */
+.starlight-shimmer {
+  background: linear-gradient(
+    115deg,
+    #f8fafc 0%,
+    #f8fafc 38%,
+    #93c5fd 48%,
+    #ffffff 52%,
+    #93c5fd 56%,
+    #f8fafc 66%,
+    #f8fafc 100%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: starlightSweep 9s linear infinite;
+}
+
+@keyframes starlightSweep {
+  0% {
+    background-position: 250% center;
+  }
+  100% {
+    background-position: -250% center;
+  }
+}
+
+[data-decrypt] {
+  font-feature-settings: "tnum";
+  cursor: default;
+  transition: color 0.15s ease;
 }
 
 .hero-bio {

@@ -331,6 +331,63 @@
         ctx.fillText("CASSIOPEIA", casPoints[1].x - 15, casPoints[1].y - 18);
       }
 
+      // --- 4. Interactive Starlight Shockwave Beacon on Proximity ---
+      const interactiveTargets = [
+        { name: "POLARIS", x: polX, y: polY, info: "Celestial Pole · RA 02h 31m" },
+        { name: "DUBHE", x: umPoints[6].x, y: umPoints[6].y, info: "Pointer Star · α UMa" },
+        { name: "MERAK", x: umPoints[5].x, y: umPoints[5].y, info: "Pointer Star · β UMa" },
+        { name: "ALKAID", x: umPoints[0].x, y: umPoints[0].y, info: "Handle Tip · η UMa" },
+        { name: "SCHEDAR", x: casPoints[1].x, y: casPoints[1].y, info: "Heart of Queen · α Cas" },
+      ];
+
+      let activeTarget = null;
+      for (const t of interactiveTargets) {
+        if (Math.hypot(targetX - t.x, targetY - t.y) < 32) {
+          activeTarget = t;
+          break;
+        }
+      }
+
+      if (activeTarget && !reduceMotion) {
+        // Expanding shockwave ripple ring
+        const ringProgress = (time * 2.5) % 1; // 0 to 1
+        const ringRadius = 6 + ringProgress * 30;
+        const ringAlpha = (1 - ringProgress) * 0.8;
+
+        ctx.beginPath();
+        ctx.arc(activeTarget.x, activeTarget.y, ringRadius, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(147, 197, 253, ${ringAlpha})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        // Scientific HUD Badge
+        const tagW = 125;
+        const tagH = 34;
+        const tagX = Math.min(width - tagW - 10, activeTarget.x + 14);
+        const tagY = Math.max(10, activeTarget.y - 17);
+
+        ctx.fillStyle = "rgba(15, 23, 42, 0.88)";
+        ctx.strokeStyle = "rgba(59, 130, 246, 0.55)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        // Support roundRect or fallback to rect
+        if (typeof ctx.roundRect === "function") {
+          ctx.roundRect(tagX, tagY, tagW, tagH, 6);
+        } else {
+          ctx.rect(tagX, tagY, tagW, tagH);
+        }
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.font = "700 11px system-ui, sans-serif";
+        ctx.fillStyle = "#F8FAFC";
+        ctx.fillText(activeTarget.name, tagX + 8, tagY + 14);
+
+        ctx.font = "400 9px system-ui, sans-serif";
+        ctx.fillStyle = "#93C5FD";
+        ctx.fillText(activeTarget.info, tagX + 8, tagY + 26);
+      }
+
       if (!reduceMotion) {
         requestAnimationFrame(render);
       }
