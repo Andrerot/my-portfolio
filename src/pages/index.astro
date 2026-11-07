@@ -159,21 +159,22 @@ const skillCategories = [
             <line x1="69" y1="331" x2="331" y2="69" stroke="#2447F5" stroke-width="0.75" stroke-dasharray="2 4"/>
           </svg>
 
-          <div class="northstar-badge">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <span data-decrypt>Navigating the 2026 AI Era</span>
+          <div class="northstar-content">
+            <div class="northstar-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span data-decrypt>Navigating the 2026 AI Era</span>
+            </div>
+
+            <h3 data-decrypt>In the age of AI, attitude and systemic vision are the true differentiator.</h3>
+
+            <p>
+              Vertical syntax memorization is no longer the bottleneck of software engineering. With intelligent AI agents capable of generating, refactoring, and debugging implementations at lighting speed, an engineer's true value lies in <strong>holistic problem comprehension</strong>: grasping real functional and business requirements, decomposing complex distributed systems, and maintaining an relentlessly proactive mindset.
+            </p>
+
+            <div class="northstar-quote">
+              High emotional intelligence, adaptability, clear communication, and architectural responsibility matter far more than knowing one specific framework by heart. AI multiplies capability, but human attitude defines direction. That must be our Polaris.
+            </div>
           </div>
-
-          <h3 data-decrypt>In the age of AI, attitude and systemic vision are the true differentiator.</h3>
-
-          <p>
-            Vertical syntax memorization is no longer the bottleneck of software engineering. With intelligent AI agents capable of generating, refactoring, and debugging implementations at lighting speed, an engineer's true value lies in <strong>holistic problem comprehension</strong>: grasping real functional and business requirements, decomposing complex distributed systems, and maintaining an relentlessly proactive mindset.
-          </p>
-
-          <div class="northstar-quote">
-            High emotional intelligence, adaptability, clear communication, and architectural responsibility matter far more than knowing one specific framework by heart. AI multiplies capability, but human attitude defines direction. That must be our Polaris.
-          </div>
-
         </div>
       </div>
     </section>
@@ -190,13 +191,13 @@ const skillCategories = [
         <div class="timeline">
           {experiences.map((exp, idx) => (
             <div class="timeline-item">
+              <span class={`timeline-node ${idx === 0 ? "active-orbit" : ""}`}></span>
               <div>
                 <div class="timeline-date">{exp.period}</div>
-                <h3 class="timeline-company" data-decrypt>{exp.company}</h3>
-                <div class="timeline-role" data-decrypt>{exp.role}</div>
+                <h3 class="timeline-company">{exp.company}</h3>
+                <div class="timeline-role">{exp.role}</div>
               </div>
-              <div class="timeline-right">
-                <span class={`timeline-node ${idx === 0 ? "active-orbit" : ""}`}></span>
+              <div>
                 <ul class="timeline-bullets">
                   {exp.highlights.map((h) => (
                     <li>{h}</li>
@@ -295,13 +296,6 @@ const skillCategories = [
         </div>
       </div>
     </section>
-
-    <!-- Back to the Stars Button -->
-    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to the stars">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m18 15-6-6-6 6"/>
-      </svg>
-    </button>
   </main>
 
   <!-- Site Footer -->
@@ -333,22 +327,6 @@ const skillCategories = [
         } catch {
           window.location.href = "mailto:and.montillo@gmail.com";
         }
-      });
-    }
-
-    // Back to top smooth scroll
-    const backToTopBtn = document.getElementById("back-to-top");
-    if (backToTopBtn) {
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 400) {
-          backToTopBtn.classList.add("visible");
-        } else {
-          backToTopBtn.classList.remove("visible");
-        }
-      });
-
-      backToTopBtn.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
       });
     }
   </script>

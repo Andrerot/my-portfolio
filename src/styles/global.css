@@ -197,25 +197,6 @@ a {
   background-position: -1px -1px;
 }
 
-/* Cosmic Horizon transition to light paper */
-.hero::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 140px;
-  background: linear-gradient(
-    to bottom,
-    rgba(7, 11, 20, 0) 0%,
-    rgba(7, 11, 20, 0.5) 45%,
-    rgba(203, 211, 221, 0.4) 85%,
-    var(--paper) 100%
-  );
-  pointer-events: none;
-  z-index: 2;
-}
-
 .hero > .wrap {
   position: relative;
   z-index: 2;
@@ -474,76 +455,89 @@ section.block {
   border-color: rgba(36, 71, 245, 0.25);
 }
 
-/* Experience Timeline (Light) */
+/* Experience Timeline (Light Editorial with Outside Vertical Axis) */
 .timeline {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   position: relative;
+  padding-left: 36px;
+}
+
+@media (min-width: 48rem) {
+  .timeline {
+    padding-left: 50px;
+    gap: 2.5rem;
+  }
+}
+
+/* Continuous vertical axis on the left - completely outside the cards */
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    #10b981 0%,
+    var(--blue) 45%,
+    rgba(203, 211, 221, 0.7) 100%
+  );
+  z-index: 1;
 }
 
 @media (min-width: 48rem) {
   .timeline::before {
-    content: "";
-    position: absolute;
-    left: 17.25rem;
-    top: 2rem;
-    bottom: 2rem;
-    width: 2px;
-    background: linear-gradient(
-      to bottom,
-      #10b981 0%,
-      var(--blue) 50%,
-      rgba(203, 211, 221, 0.7) 100%
-    );
-    z-index: 1;
+    left: 20px;
   }
 }
 
 .timeline-item {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 1.25rem;
   padding: 2rem;
   background: var(--paper-card);
   border: 1px solid var(--grid);
   border-radius: 12px;
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   z-index: 2;
 }
 
 @media (min-width: 48rem) {
   .timeline-item {
-    grid-template-columns: 16rem 1fr;
+    grid-template-columns: 14rem 1fr;
     gap: 2.5rem;
   }
 }
 
-.timeline-right {
-  position: relative;
-}
-
+/* Orbit Node positioned precisely centered on the vertical line outside the card */
 .timeline-node {
   position: absolute;
-  left: -2.05rem;
-  top: 0.35rem;
+  left: -30px;
+  top: 2rem;
   width: 14px;
   height: 14px;
   border-radius: 50%;
   background: #ffffff;
   border: 3px solid var(--blue);
-  box-shadow: 0 0 0 4px rgba(36, 71, 245, 0.12);
-  display: none;
+  box-shadow: 0 0 0 4px rgba(36, 71, 245, 0.14);
+  z-index: 3;
   transition: all 0.25s ease;
 }
 
 @media (min-width: 48rem) {
   .timeline-node {
-    display: block;
+    left: -37px;
+    width: 16px;
+    height: 16px;
   }
 }
 
+/* Active Orbit for current role (CCH Tagetik) */
 .timeline-node.active-orbit {
   border-color: #10b981;
   box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.25);
@@ -552,17 +546,22 @@ section.block {
 
 .timeline-item:hover .timeline-node {
   transform: scale(1.3);
-  box-shadow: 0 0 0 6px rgba(36, 71, 245, 0.2);
+  box-shadow: 0 0 0 7px rgba(36, 71, 245, 0.22);
+}
+
+.timeline-item:hover .timeline-node.active-orbit {
+  box-shadow: 0 0 0 7px rgba(16, 185, 129, 0.35);
 }
 
 .timeline-item:hover {
   border-color: var(--blue);
   background: var(--paper-hover);
-  box-shadow: 0 8px 25px rgba(16, 24, 40, 0.06);
+  transform: translateX(4px);
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.07);
 }
 
 .timeline-date {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: var(--ink-muted);
 }
@@ -572,13 +571,13 @@ section.block {
   font-size: 1.35rem;
   font-weight: 700;
   color: var(--ink);
-  margin: 0 0 0.25rem;
+  margin: 0.2rem 0 0.25rem;
 }
 
 .timeline-role {
   color: var(--blue);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.98rem;
   margin-bottom: 0.75rem;
 }
 
@@ -651,11 +650,11 @@ section.block {
 }
 
 .astrolabe-watermark {
-  position: absolute;
-  right: -50px;
-  top: -50px;
-  width: 380px;
-  height: 380px;
+  position: absolute !important;
+  right: -40px;
+  top: -40px;
+  width: 360px;
+  height: 360px;
   pointer-events: none;
   opacity: 0.12;
   animation: slowAstrolabeSpin 160s linear infinite;
@@ -667,7 +666,7 @@ section.block {
   100% { transform: rotate(360deg); }
 }
 
-.northstar-banner > * {
+.northstar-content {
   position: relative;
   z-index: 2;
 }
@@ -794,39 +793,4 @@ footer .wrap {
   }
 }
 
-/* Back to the Stars Button */
-.back-to-top {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 3.1rem;
-  height: 3.1rem;
-  border-radius: 50%;
-  background: rgba(15, 23, 42, 0.88);
-  color: #f8fafc;
-  border: 1px solid rgba(59, 130, 246, 0.4);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 15px rgba(59, 130, 246, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 45;
-  backdrop-filter: blur(12px);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(14px) scale(0.9);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
 
-.back-to-top.visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0) scale(1);
-}
-
-.back-to-top:hover {
-  background: var(--blue);
-  border-color: #60a5fa;
-  transform: translateY(-3px) scale(1.08);
-  box-shadow: 0 6px 25px rgba(36, 71, 245, 0.45), 0 0 20px rgba(96, 165, 250, 0.45);
-}
