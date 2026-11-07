@@ -122,8 +122,8 @@ function initMotion() {
 
     const length = originalText.length;
     let iteration = 0;
-    const maxIterations = 14;
-    const speed = 42; // ms per tick (total ~580ms: deliberate, readable, rhythmic)
+    const maxIterations = 10;
+    const speed = 35; // ms per tick 
 
     const interval = setInterval(() => {
       element.textContent = originalText

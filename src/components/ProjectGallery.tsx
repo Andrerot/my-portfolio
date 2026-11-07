@@ -8,7 +8,6 @@ export interface Project {
   badge?: string;
   stack: string[];
   description: string;
-  link?: string;
   isPrivateOrToy?: boolean;
 }
 
@@ -22,7 +21,6 @@ const ALL_PROJECTS: Project[] = [
     stack: ["Astro", "TypeScript", "Tailwind v4", "GSAP", "Lenis", "GitHub Pages"],
     description:
       "Engineered via autonomous AI agent pair programming. Celestial deep-space hero with accurate circumpolar constellations, kinetic typography, fluid inertial scrolling, and edge deployment with 100/100 Lighthouse performance.",
-    link: "https://github.com/Andrerot/my-portfolio",
   },
   {
     id: "cloud-microservices",
@@ -33,7 +31,6 @@ const ALL_PROJECTS: Project[] = [
     stack: ["Python", "SpringBoot", "Docker", "Kubernetes", "Helm", "AWS"],
     description:
       "High-throughput, containerized microservices platform designed for horizontal scalability, automated CI/CD deployments, and fault-tolerant service communication across distributed environments.",
-    link: "https://github.com/Andrerot",
   },
   {
     id: "enterprise-analytics",
@@ -44,7 +41,6 @@ const ALL_PROJECTS: Project[] = [
     stack: ["Angular", "SpringBoot", "JPA / Hibernate", "MySQL", "MongoDB"],
     description:
       "Enterprise solution powering high-volume financial data processing, robust transaction management, and secure multi-tenant role-based access control.",
-    link: "https://github.com/Andrerot",
   },
   {
     id: "agent-tooling",
@@ -55,7 +51,6 @@ const ALL_PROJECTS: Project[] = [
     stack: ["Python", "LLM APIs", "Function Calling", "Vector DBs", "REST"],
     description:
       "Exploratory systems leveraging intelligent autonomous agents, multi-step problem solving, and contextual tool usage to automate complex engineering tasks and data workflows.",
-    link: "https://github.com/Andrerot",
   },
   {
     id: "sabotatore",
@@ -166,29 +161,9 @@ export default function ProjectGallery() {
                 )}
               </div>
 
-              {/* Title & Link */}
+              {/* Title */}
               <h3 className="text-xl font-bold mb-2 text-[#101828] group-hover:text-[#2447F5] transition-colors">
-                {p.link ? (
-                  <a
-                    href={p.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5"
-                  >
-                    <span data-decrypt>{p.title}</span>
-                    <svg
-                      className="w-4 h-4 opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform text-[#2447F5]"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                    >
-                      <path d="M7 17L17 7M17 7H7M17 7V17" />
-                    </svg>
-                  </a>
-                ) : (
-                  <span data-decrypt>{p.title}</span>
-                )}
+                <span data-decrypt>{p.title}</span>
               </h3>
 
               {/* Description */}
