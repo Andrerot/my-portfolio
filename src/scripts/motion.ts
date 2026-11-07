@@ -19,25 +19,44 @@ function initMotion() {
     requestAnimationFrame(raf);
   }
 
-  // 2. Initial Variable Font Entrance Animation
+  // 2. Cinematic Entrance Sequence (Hero Content & Variable Typography)
+  const heroContent = document.querySelector<HTMLElement>(".hero-content");
   const letters = document.querySelectorAll<HTMLElement>("[data-letter]");
-  if (letters.length > 0 && !reduceMotion) {
+
+  if (!reduceMotion && heroContent) {
+    // Hero content slides into position with blur dissolution as constellations pan right
     gsap.fromTo(
-      letters,
+      heroContent,
+      { opacity: 0, x: -50, filter: "blur(8px)" },
       {
-        "--w": 200,
-        opacity: 0.3,
-        y: 12,
-      },
-      {
-        "--w": 750,
         opacity: 1,
-        y: 0,
-        duration: 1.2,
+        x: 0,
+        filter: "blur(0px)",
+        duration: 1.3,
+        delay: 0.6,
         ease: "power3.out",
-        stagger: 0.035,
       }
     );
+
+    if (letters.length > 0) {
+      gsap.fromTo(
+        letters,
+        {
+          "--w": 200,
+          opacity: 0.2,
+          y: 14,
+        },
+        {
+          "--w": 750,
+          opacity: 1,
+          y: 0,
+          duration: 1.1,
+          delay: 0.8,
+          ease: "power3.out",
+          stagger: 0.035,
+        }
+      );
+    }
   }
 
   // 3. "Gravitational Lens" — Magnetic Cursor Proximity Typography
@@ -89,7 +108,7 @@ function initMotion() {
     });
   }
 
-  // 4. "Cypher / Terminal Decrypt" Engine (Universal Event Delegation)
+  // 4. "Cypher / Terminal Decrypt" Engine (Slower & Ultra-Readable)
   const GLYPHS = "0123456789ABCDEF!<>-_/[]{}—=+*^?#_αβγλ";
 
   function scramble(element: HTMLElement) {
@@ -103,8 +122,8 @@ function initMotion() {
 
     const length = originalText.length;
     let iteration = 0;
-    const maxIterations = 8;
-    const speed = 25; // ms per tick
+    const maxIterations = 14;
+    const speed = 42; // ms per tick (total ~580ms: deliberate, readable, rhythmic)
 
     const interval = setInterval(() => {
       element.textContent = originalText

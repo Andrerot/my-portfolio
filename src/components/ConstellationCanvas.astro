@@ -137,14 +137,29 @@
       const heroReservedWidth = isMobile ? 0 : Math.min(width * 0.42, 500);
       const skyAreaWidth = width - heroReservedWidth;
 
-      // Adaptive Polaris Center: centered on mobile, right-aligned on desktop
-      const polX = isMobile
-        ? width * 0.5 + offsetX * 0.4
-        : heroReservedWidth + skyAreaWidth * 0.52 + offsetX * 0.7;
+      // Cinematic Opening Pan: constellations start centered, then smoothly glide to the right quadrant
+      const introDelay = 0.35; // wait 350ms in pure centered celestial sky
+      const introDuration = 1.5; // 1.5s smooth celestial pan
+      let panProgress = 1;
 
-      const polY = isMobile
-        ? height * 0.28 + offsetY * 0.4
-        : height * 0.48 + offsetY * 0.7;
+      if (!reduceMotion) {
+        if (time < introDelay) {
+          panProgress = 0;
+        } else if (time < introDelay + introDuration) {
+          const raw = (time - introDelay) / introDuration;
+          panProgress = 1 - Math.pow(1 - raw, 3); // cubic ease-out
+        } else {
+          panProgress = 1;
+        }
+      }
+
+      // Adaptive Polaris Center: starts in center, glides to right quadrant on desktop
+      const polX_center = width * 0.5;
+      const polX_docked = heroReservedWidth + skyAreaWidth * 0.52;
+      const polX_target = isMobile ? polX_center : polX_center + (polX_docked - polX_center) * panProgress;
+
+      const polX = polX_target + offsetX * 0.7;
+      const polY = (isMobile ? height * 0.28 : height * 0.48) + offsetY * 0.7;
 
       // Scale (pixels per celestial degree) bounded safely for both mobile and desktop
       const maxRadiusDeg = 44;
