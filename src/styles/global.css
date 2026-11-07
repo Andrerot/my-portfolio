@@ -190,11 +190,6 @@ a {
   overflow: hidden;
   background-color: var(--space-bg);
   color: var(--starlight);
-  background-image:
-    linear-gradient(rgba(30, 41, 59, 0.35) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(30, 41, 59, 0.35) 1px, transparent 1px);
-  background-size: 48px 48px;
-  background-position: -1px -1px;
 }
 
 .hero > .wrap {
