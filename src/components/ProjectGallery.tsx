@@ -163,7 +163,7 @@ export default function ProjectGallery() {
 
               {/* Title */}
               <h3 className="text-xl font-bold mb-2 text-[#101828] group-hover:text-[#2447F5] transition-colors">
-                <span data-decrypt>{p.title}</span>
+                <span>{p.title}</span>
               </h3>
 
               {/* Description */}
