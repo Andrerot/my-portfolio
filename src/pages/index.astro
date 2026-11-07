@@ -147,6 +147,18 @@ const skillCategories = [
         <h2 class="section-title">Mindset & Problem Clarity Over Raw Syntax</h2>
 
         <div class="northstar-banner">
+          <svg class="astrolabe-watermark" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="200" cy="200" r="185" stroke="#2447F5" stroke-width="1.5" stroke-dasharray="4 8"/>
+            <circle cx="200" cy="200" r="150" stroke="#2447F5" stroke-width="1"/>
+            <circle cx="200" cy="200" r="110" stroke="#F59E0B" stroke-width="1.5"/>
+            <circle cx="200" cy="200" r="70" stroke="#2447F5" stroke-width="1" stroke-dasharray="3 6"/>
+            <circle cx="200" cy="200" r="25" stroke="#F59E0B" stroke-width="1.5"/>
+            <line x1="15" y1="200" x2="385" y2="200" stroke="#2447F5" stroke-width="1"/>
+            <line x1="200" y1="15" x2="200" y2="385" stroke="#2447F5" stroke-width="1"/>
+            <line x1="69" y1="69" x2="331" y2="331" stroke="#2447F5" stroke-width="0.75" stroke-dasharray="2 4"/>
+            <line x1="69" y1="331" x2="331" y2="69" stroke="#2447F5" stroke-width="0.75" stroke-dasharray="2 4"/>
+          </svg>
+
           <div class="northstar-badge">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             <span data-decrypt>Navigating the 2026 AI Era</span>
@@ -176,14 +188,15 @@ const skillCategories = [
         <h2 class="section-title">Work Experience & Education</h2>
 
         <div class="timeline">
-          {experiences.map((exp) => (
+          {experiences.map((exp, idx) => (
             <div class="timeline-item">
               <div>
                 <div class="timeline-date">{exp.period}</div>
                 <h3 class="timeline-company" data-decrypt>{exp.company}</h3>
                 <div class="timeline-role" data-decrypt>{exp.role}</div>
               </div>
-              <div>
+              <div class="timeline-right">
+                <span class={`timeline-node ${idx === 0 ? "active-orbit" : ""}`}></span>
                 <ul class="timeline-bullets">
                   {exp.highlights.map((h) => (
                     <li>{h}</li>
@@ -282,6 +295,13 @@ const skillCategories = [
         </div>
       </div>
     </section>
+
+    <!-- Back to the Stars Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top" title="Back to the stars">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m18 15-6-6-6 6"/>
+      </svg>
+    </button>
   </main>
 
   <!-- Site Footer -->
@@ -313,6 +333,22 @@ const skillCategories = [
         } catch {
           window.location.href = "mailto:and.montillo@gmail.com";
         }
+      });
+    }
+
+    // Back to top smooth scroll
+    const backToTopBtn = document.getElementById("back-to-top");
+    if (backToTopBtn) {
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 400) {
+          backToTopBtn.classList.add("visible");
+        } else {
+          backToTopBtn.classList.remove("visible");
+        }
+      });
+
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
       });
     }
   </script>
